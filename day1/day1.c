@@ -4,14 +4,13 @@
 int main(){
 
     FILE *fptr;
-    fptr = fopen("trebuchet.txt", "r");
+    fptr = fopen("trebuchet_real.txt", "r");
     int sum=0;
+    char myarray[100];
 
-    for (int i=0; i < 4; i++)
+    while (fgets(myarray, 100, fptr))
     {
-        int tmp[2], k=0, count=0;
-        char myarray[100];
-        fgets(myarray, 100, fptr);
+        int tmp[10], k=0, count=0;
 
         for (int i=0; myarray[i]!='\0'; i++){
             int number = myarray[i]-'0'; //make number from char to int by subtracting ascii value 0
@@ -23,13 +22,13 @@ int main(){
         }
 
         if (count==1){tmp[1] = tmp[0];} //if theres only one number use it twice
-        for (int i = 0; i < 2; i++){k = k*10 + tmp[i];} //join the two numbers to one number
+        k = tmp[0]*10 + tmp[count-1]; //join 
         
-        printf("Tallet er %d\n", k);
+        printf("The number is %d\n", k);
         sum += k;
     }
 
-    printf("Summen er %d", sum);
+    printf("The sum is %d", sum);
 
     return 0;
 }
