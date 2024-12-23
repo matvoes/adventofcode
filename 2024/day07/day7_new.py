@@ -3,7 +3,7 @@ from itertools import product
 
 
 def generate_combinations(length):
-    symbols = ['+', '*']                                                        #all symbols possible
+    symbols = ['+', '*', '|']                                                        #all symbols possible
     combinations = [''.join(comb) for comb in product(symbols, repeat=length)]
     return combinations
 
@@ -15,11 +15,13 @@ def custom_eval(numbers, symbols):
             tmp += int(numbers[i+1])
         elif symbols[i] == '*':
             tmp *= int(numbers[i+1])
+        elif symbols[i] == '|':
+            tmp = int(str(tmp) + numbers[i+1])
     return tmp
 
 
 def main():
-    with open('day7.test', 'r') as file:
+    with open('day7.input', 'r') as file:
         content = file.readlines()
     counter = 0                                                        #counter for answer    
 
