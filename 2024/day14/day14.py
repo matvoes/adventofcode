@@ -1,5 +1,7 @@
 #Day14
 import re
+from colorama import Fore, Style
+import os
 
 
 map_width = 101
@@ -39,8 +41,8 @@ def sum_quadrant(pos, real_map):
     for i in range(pos[2],pos[3]):
         for j in range(pos[0], pos[1]):
             counter += real_map[i][j]
-            #print(real_map[i][j], i, j)
     return counter
+
 
 def main():
     with open('day14.input', 'r') as f: c = f.readlines()
@@ -48,7 +50,6 @@ def main():
 
     og_map = [list('0'*(map_width)) for i in range(0, map_length)]    #make empty map
     og_map = [[int(char) for char in line] for line in og_map]      #all int's
-    #for l in og_map: print(l)
 
     robots = []
     #initialize map
@@ -56,20 +57,27 @@ def main():
         init_robot = clean_initial_pos(l)
         robots.append(init_robot)
         real_map = make_map(og_map, init_robot[0])
-
-    #print()
-    #for i in real_map:print(i)
     
 
     #move robots
-    for i in range(100):
+    for i in range(7412):
+        
         for r in range(0,len(robots)):
             real_map = unmake_map(real_map, robots[r][0])
             robots[r][0] = do_move(robots[r][0], robots[r][1])
             real_map = make_map(real_map, robots[r][0])
 
-        #print()
-        #for i in real_map:print(i)
+        print()
+        if i%101 == 38:
+            os.system('clear')
+            print(i)
+            for row in real_map:
+                for num in row:
+                    if num == 0:
+                        print(f"{Fore.BLACK}{num}{Style.RESET_ALL}", end=" ")
+                    else:
+                        print(f"{Fore.RED}{num}{Style.RESET_ALL}", end=" ")
+                print()
 
     #quadrants
     q1 = (0, map_width//2, 0, map_length//2)
